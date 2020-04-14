@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - Express</title>
+    <link th:href="@{/assets/css/bootstrap.min.css}" href="../static/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/assets/css/login.css}" href="../static/assets/css/.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="row" style="z-index:1000">
+        <div class="col-md-4  col-lg-5" >
+        </div>
+        <div class="col-md-8 col-sm-12 col-lg-7 col-xs-12 left" >
+            <div class="main">
+                <div class="mt10 pull-right">
+                    <a href="/register"><i class="glyphicon glyphicon-forward"></i>立即注册</a>
+                </div>
+                <div id="myTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="namePW">
+                        <form role="form" action="/auth/form-login" method="post" class="form-horizontal">
+                            <div class="form-group">
+                                <label for="name" class="col-sm-3 control-label">用户名</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="name" name="username" placeholder="请输入用户名">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="passwd" class="col-sm-3 control-label">密码</label>
+                                <div class="col-sm-9">
+                                <input type="password" class="form-control" id="passwd" name="password" placeholder="请输入密码">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="verifyCode" class="col-sm-3 control-label">验证码</label>
+                                <div class="col-md-5 col-sm-5 col-lg-5 col-xs-5" >
+                                    <input type="text" class="form-control" name="verifyCode" id="verifyCode" placeholder="请输入验证码">
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-lg-3 col-xs-3 ">
+                                    <img src="/auth/code/getVerifyCode" title="看不清，请点我" onclick="refresh(this)" onmouseover="mouseover(this)" >
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkboxd">
+                                    <input type="checkbox" name="remember-me"> 自动登录</div>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg btn-block" id="submit1">登录</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" id="messageInfo" th:value="${message}">
+
+<script th:src="@{/assets/js/http.js}" src="../static/assets/js/http.js"></script>
+<script th:src="@{/assets/js/express.js}" src="../static/assets/js/express.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}" src="../static/assets/js/jquery.min.js"></script>
+<script th:src="@{/assets/layer/layer.js}" src="../static/assets/layer/layer.js"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}" src="../static/assets/js/bootstrap.min.js"></script>
+<script>
+    let cookieName = 'loginCookie';
+
+    $(function () {
+        // 传递消息
+        let text = $("#messageInfo").val();
+        if (text != null && text !== '') {
+            layer.msg(text, {icon: 2});
+            $("#messageInfo").val('');
+        }
+
+        // 验证码
+        $("#getTelCode").click(function () {
+            sendCode($("#getTelCode"));
+        });
+        let v = getCookieValue(cookieName);//获取cookie值
+        if (v > 0) {
+            setTime($("#getTelCode"));//开始倒计时
+        }
+    });
+
+    function refresh(obj) { obj.src = "/auth/code/getVerifyCode?" + Math.random(); }
+
+    function mouseover(obj) { obj.style.cursor = "pointer"; }
+
+    // 发送验证码
+    function sendCode(obj) {
+        let phoneNum = $("#inputTel").val();
+        if (!isPoneAvailable(phoneNum)) {
+            layer.msg("手机号码不合法", {icon: 7});
+            return false;
+        }
+        sendJson(HTTP.GET, '/auth/code/sms?mobile=' + phoneNum, null, false, function (res) {
+                if (res.code === 0) {
+                    layer.msg("短信发送成功", {icon: 1});
+                    addCookie(cookieName, 60, 60);//添加cookie记录,有效时间60s
+                    setTime(obj);//开始倒计
+                } else {
+                    layer.msg(res.msg, {icon: 2});
+                }
+            },
+            function () {
+                layer.msg("未知错误", {icon: 2});
+            });
+    }
+</script>
+</body>
+</html>

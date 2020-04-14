@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="express:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>express</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="express.war">
+      <element id="artifact" artifact-name="express:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>公司管理 - Express</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap.min.css}" href="../../static/assets/css/bootstrap.min.css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/bootstrap-table.css}" href="../../static/assets/css/bootstrap-table.css"/>
+    <link rel="stylesheet" th:href="@{/assets/css/express.css}" href="../../static/assets/css/express.css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <!-- 头部 -->
+    <nav th:replace="admin/module/nav::html"></nav>
+    <!-- 主体 -->
+    <div class="row">
+        <!-- 左侧菜单 -->
+        <div th:replace="admin/module/sidebar::html"></div>
+        <div class="col-md-10">
+            <div class="panel-heading">
+                派送员绩效数据
+            </div>
+            <div class="panel-body">
+                <table id="tb_user_payment"></table>
+            </div>
+
+            <div class="panel-heading">
+                派送员工作情况
+            </div>
+            <div class="panel-body">
+                <table id="tb_user_order"></table>
+            </div>
+
+            <div class="panel-heading">
+                公司快递情况
+            </div>
+            <div class="panel-body">
+                <table id="tb_company_order"></table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/js/http.js}" src="../../static/assets/js/http.js"></script>
+<script th:src="@{/assets/js/express.js}" src="../../static/assets/js/express.js"></script>
+<script th:src="@{/assets/js/jquery.min.js}" src="../../static/assets/js/jquery.min.js"></script>
+<script th:src="@{/assets/js/jquery.validate.min.js}" src="../../static/assets/js/jquery.validate.min.js"></script>
+<script th:src="@{/assets/layer/layer.js}" src="../../static/assets/layer/layer.js"></script>
+<script th:src="@{/assets/js/bootstrap.min.js}" src="../../static/assets/js/bootstrap.min.js"></script>
+<script th:src="@{/assets/js/bootstrap-table.min.js}" src="../../static/assets/js/bootstrap-table.min.js"></script>
+<script th:src="@{/assets/js/bootstrap-table-export.min.js}" src="../../static/assets/js/bootstrap-table-export.min.js"></script>
+<script th:src="@{/assets/js/bootstrap-table-zh-CN.min.js}" src="../../static/assets/js/bootstrap-table-zh-CN.min.js"></script>
+<script th:src="@{/assets/js/tableExport.min.js}" src="../../static/assets/js/tableExport.min.js"></script>
+<script>
+    $(function () {
+        $("#report-sidebar").addClass('active');
+
+        //1、初始化Table
+        let tb_user_payment = new TableInit('#tb_user_payment', '/api/v1/report/VUserPayment-list', [{
+            field: 'idCard',
+            title: '派送员证件信息'
+        }, {
+            field: 'realName',
+            title: '派送员姓名',
+        }, {
+            field: 'payment',
+            title: '本人收入（元）'
+        }]);
+
+        let tb_user_order = new TableInit('#tb_user_order', '/api/v1/report/VUserOrder-list', [{
+            field: 'idCard',
+            title: '派送员证件信息'
+        }, {
+            field: 'realName',
+            title: '派送员姓名',
+        }, {
+            field: 'ingOrder',
+            title: '正在进行中订单单数'
+        }, {
+            field: 'errorOrder',
+            title: '异常订单单数'
+        }, {
+            field: 'completeOrder',
+            title: '已完成订单单数'
+        }]);
+
+        let tb_company_order = new TableInit('#tb_company_order', '/api/v1/report/VCompanyOrder-list', [{
+            field: 'name',
+            title: '公司名称'
+        }, {
+            field: 'code',
+            title: '公司代码',
+        }, {
+            field: 'waitOrder',
+            title: '等待接单数'
+        }, {
+            field: 'ingOrder',
+            title: '正在进行中订单单数'
+        }, {
+            field: 'errorOrder',
+            title: '异常订单单数'
+        }, {
+            field: 'completeOrder',
+            title: '已完成订单单数'
+        }]);
+
+        tb_user_payment.Init();
+        tb_user_order.Init();
+        tb_company_order.Init();
+    });
+
+    let TableInit = function (tableId, url, columns) {
+        let oTableInit = new Object();
+        //初始化Table
+        oTableInit.Init = function () {
+            $(tableId).bootstrapTable({
+                url: url,          //请求后台的URL（*）
+                method: HTTP.GET,                   //请求方式（*）
+                toolbar: '#toolbar',                //工具按钮组id
+                striped: true,                      //是否显示行间隔色
+                cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true,                   //是否显示分页（*）
+                sortable: false,                    //是否启用排序
+                sortOrder: "asc",                   //排序方式
+                queryParams: oTableInit.queryParams,//传递参数（*）
+                sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber:1,                       //初始化加载第一页，默认第一页
+                pageSize: 10,                       //每页的记录行数（*）
+                pageList: [10, 25, 50, 100],        //可供选择的每页的行数（*）
+                search: false,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端。后台分页时意义不大
+                showColumns: true,                  //是否显示所有的列
+                showRefresh: true,                  //是否显示刷新按钮
+                minimumCountColumns: 2,             //最少允许的列数
+                clickToSelect: true,                //是否启用点击选中行
+                // height: 750,                     //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "id",                     //每一行的唯一标识，一般为主键列
+                showToggle:false,                   //是否显示详细视图和列表视图的切换按钮
+                cardView: false,                    //是否显示详细视图
+                detailView: false,                  //是否显示父子表
+                showExport: true,                   //是否显示导出
+                exportDataType: "basic",            //导出的模式是当前页basic、所有数据all、选中数据selected。
+                columns: columns
+            });
+        };
+        // 传递给后台的参数
+        oTableInit.queryParams = function (params) {
+            return {   //这里的键的名字和后台参数必须一致
+                size: params.limit,                             //页面大小
+                current: (params.offset / params.limit) + 1,   //页码
+            };
+        };
+        return oTableInit;
+    };
+
+    function flushTable() {
+        $("#tb_user_payment").bootstrapTable('refresh',{url : '/api/v1/report/VUserPayment-list'} );
+        $("#tb_company_order").bootstrapTable('refresh',{url : '/api/v1/report/VCompanyOrder-list'} );
+        $("#tb_user_order").bootstrapTable('refresh',{url : '/api/v1/report/VUserOrder-list'} );
+    }
+
+</script>
+</body>
+</html>
