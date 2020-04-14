@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="85701121-95c0-4417-9e0d-567a48d5d3e0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="85701121-95c0-4417-9e0d-567a48d5d3e0" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="HZL &lt;2352823890@qq.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="MavenImportPreferences">
@@ -107,7 +110,7 @@
       <workItem from="1586273904443" duration="3658000" />
       <workItem from="1586530478428" duration="2128000" />
       <workItem from="1586581222001" duration="29988000" />
-      <workItem from="1586854267114" duration="1250000" />
+      <workItem from="1586854267114" duration="1501000" />
     </task>
     <task id="LOCAL-00001" summary="校园快递收发系统">
       <created>1586854720860</created>
@@ -116,7 +119,14 @@
       <option name="project" value="LOCAL" />
       <updated>1586854720861</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="校园快递收发系统最新">
+      <created>1586855675028</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1586855675028</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,7 +134,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="校园快递收发系统" />
-    <option name="LAST_COMMIT_MESSAGE" value="校园快递收发系统" />
+    <MESSAGE value="校园快递收发系统最新" />
+    <option name="LAST_COMMIT_MESSAGE" value="校园快递收发系统最新" />
   </component>
   <component name="WindowStateProjectService">
     <state x="179" y="0" key="#Notifications" timestamp="1582984055536">
@@ -135,10 +146,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="187" y="285" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog/0.0.1366.728@0.0.1366.728" timestamp="1582707138066" />
-    <state x="106" y="0" key="CommitChangelistDialog2" timestamp="1586854706259">
+    <state x="106" y="0" key="CommitChangelistDialog2" timestamp="1586855672392">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="106" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1586854706259" />
+    <state x="106" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1586855672392" />
     <state x="396" y="0" key="Diagram.Print.Preview.Dialog" timestamp="1585311608282">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -199,10 +210,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="75" y="0" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1586223050065" />
-    <state x="179" y="38" key="Vcs.Push.Dialog.v2" timestamp="1586855608923">
+    <state x="179" y="38" key="Vcs.Push.Dialog.v2" timestamp="1586855736708">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="179" y="38" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1586855608923" />
+    <state x="179" y="38" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1586855736708" />
     <state x="259" y="161" key="run.anything.popup" timestamp="1585585233021">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
